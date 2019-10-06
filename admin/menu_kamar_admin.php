@@ -87,11 +87,11 @@ if ( !isset($_SESSION['username']) ){
                             <table class="table table-hover table-striped">
                                 <thead>
                                     <tr>
-                                        <th>NO KAMAR</th>
-                                        <th>KELAS</th>
-                                        <th>JUMLAH</th>
-                                        <th>UNIT TERSEDIA</th>
-                                        <th>BIAYA</th>
+                                        <th>ID Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Kategori</th>
+                                        <th>Stok</th>
+                                        <th>Harga</th>
                                         <th width="5%"></th>
                                         <th width="5%"></th>
                                     </tr>
@@ -100,17 +100,17 @@ if ( !isset($_SESSION['username']) ){
 <?php
 include "php/koneksi.php";
 
-$res = mysql_query("SELECT * FROM tabel_kamar ORDER BY no_kamar");
+$res = mysql_query("SELECT * FROM inventori ORDER BY id_barang");
 while ( $row = mysql_fetch_assoc($res) ){
 ?>
                                     <tr>
-                                        <td><?php echo $row['no_kamar'];?></td>
-                                        <td><?php echo $row['kelas'];?></td>
-                                        <td><?php echo $row['jumlah'];?></td>
-                                        <td><?php echo $row['unit_tersedia'];?></td>
-                                        <td><?php echo $row['biaya'];?></td>
-                                        <td><a href="#modalUbah" class="btn btn-primary" data-toggle="modal" data-id="<?php echo $row['no_kamar'];?>"><i class="fa fa-pencil"></i></td>
-                                        <td><a href="php/hapusKamar.php?id=<?php echo $row['no_kamar'];?>" onclick="return confirm('Yakin hapus data?')" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                                        <td><?php echo $row['id_barang'];?></td>
+                                        <td><?php echo $row['nama_barang'];?></td>
+                                        <td><?php echo $row['kategori'];?></td>
+                                        <td><?php echo $row['stok'];?></td>
+                                        <td><?php echo $row['harga'];?></td>
+                                        <td><a href="#modalUbah" class="btn btn-primary" data-toggle="modal" data-id="<?php echo $row['id_barang'];?>"><i class="fa fa-pencil"></i></td>
+                                        <td><a href="php/hapusKamar.php?id=<?php echo $row['id_barang'];?>" onclick="return confirm('Yakin hapus data?')" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
                                     </tr>
 <?php
 }
