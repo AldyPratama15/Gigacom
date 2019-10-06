@@ -58,7 +58,7 @@ if ( !isset($_SESSION['username']) ){
           <li class="nav-item ">
             <a class="nav-link" href="menu_lihat_kamar.php">
               <i class="fa fa-briefcase fa-fw"></i>
-              <center><p>KAMAR</p></center>
+              <center><p>INVENTORI</p></center>
             </a>
           </li>
           <li class="nav-item ">

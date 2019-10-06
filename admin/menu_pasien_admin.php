@@ -13,7 +13,7 @@ if ( !isset($_SESSION['username']) ){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Pasien | SIRINA</title>
+    <title>Pasien | GIGACOM</title>
 
     <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="libs/metisMenu/metisMenu.min.css" rel="stylesheet">

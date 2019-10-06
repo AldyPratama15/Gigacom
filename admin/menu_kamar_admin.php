@@ -13,7 +13,7 @@ if ( !isset($_SESSION['username']) ){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Kamar | SIRINA</title>
+    <title>Inventori | Gigacom</title>
 
     <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="libs/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -40,7 +40,7 @@ if ( !isset($_SESSION['username']) ){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Admin SIRINA</a>
+                <a class="navbar-brand" href="#">ADMIN GIGACOM</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -61,7 +61,7 @@ if ( !isset($_SESSION['username']) ){
                     <ul class="nav" id="side-menu">
                         <!-- <li><a href="halaman_admin.php"><i class="fa fa-home fa-fw"></i> Home</a></li> -->
                         <li><a href="menu_pasien_admin.php"><i class="fa fa-child fa-fw"></i> Pasien</a></li>
-                        <li><a class="active" href="menu_kamar_admin.php"><i class="fa fa-bed fa-fw"></i> Kamar</a></li>
+                        <li><a class="active" href="menu_kamar_admin.php"><i class="fa fa-bed fa-fw"></i> Inventori</a></li>
                         <li><a href="menu_laporan_admin.php"><i class="fa fa-book fa-fw"></i> Laporan</a></li>
                         <li><a href="menu_pegawai.php"><i class="fa fa-group fa-fw"></i> Pegawai</a></li>
                     </ul>
@@ -73,14 +73,14 @@ if ( !isset($_SESSION['username']) ){
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Menu Kamar</h1>
+                    <h1 class="page-header">Inventori</h1>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
-                    <p><a class="btn btn-success" href="#modalTambah" data-toggle="modal">Tambah Kamar</a></p>
+                    <p><a class="btn btn-success" href="#modalTambah" data-toggle="modal">Tambah Inventori</a></p>
                     <div class="panel panel-default">
-                        <div class="panel-heading">Tabel Kamar
+                        <div class="panel-heading">
                             <input type="text" id="cari" placeholder="Cari ..." style="width: 200px; padding: 5px;">
                         </div>
                         <div class="panel-body">

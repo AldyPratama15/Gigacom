@@ -12,7 +12,7 @@ if ( !isset($_SESSION['username']) ){
   <link rel="apple-touch-icon" sizes="76x76" href="libs/assets/img/apple-icon.png">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-   <title>Kamar | SIRINA</title>
+   <title>Inventori | GigaCom</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -58,7 +58,7 @@ if ( !isset($_SESSION['username']) ){
           <li class="nav-item active ">
             <a class="nav-link" href="menu_lihat_kamar.php">
               <i class="fa fa-briefcase fa-fw"></i>
-              <center><p>KAMAR</p></center>
+              <center><p>INVENTORI</p></center>
             </a>
           </li>
           <li class="nav-item ">
@@ -81,7 +81,7 @@ if ( !isset($_SESSION['username']) ){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="dashboard.php">SIRINA - SISTEM INFORMASI RAWAT INAP</a>
+            <a class="navbar-brand" href="dashboard.php">SISTEM INFORMASI INVENTORI</a>
           </div>
          
           <div class="collapse navbar-collapse justify-content-end">         
@@ -107,8 +107,8 @@ if ( !isset($_SESSION['username']) ){
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Data Kamar</h4>
-                  <p class="card-category"> Data Fasilitas Kamar Di Puskesmas</p>
+                  <h4 class="card-title ">Data Inventori</h4>
+                  <p class="card-category"> Data Invrntori yang tersedia</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -116,26 +116,26 @@ if ( !isset($_SESSION['username']) ){
                     <table class="table table-hover">
                       <thead class=" text-primary">
                         <tr>
-                          <th>No Kamar</th>
-                          <th>Kelas</th>
-                          <th>Jumlah</th>
-                          <th>Unit Tersedia</th>
-                          <th>Biaya</th>
+                          <th>Id Barang</th>
+                          <th>Nama Barang</th>
+                          <th>Kategori</th>
+                          <th>Stok</th>
+                          <th>Harga</th>
                         </tr>
                       </thead>
                       <tbody id="tabelKamar">
 <?php
 include "php/koneksi.php";
 
-$res = mysql_query("SELECT * FROM tabel_kamar ORDER BY kelas ASC");
+$res = mysql_query("SELECT * FROM inventori ORDER BY kategori ASC");
 while ($row = mysql_fetch_array($res)) {
 ?>
                         <tr>
-                          <td><?php echo $row['no_kamar']; ?></td>
-                          <td><?php echo $row['kelas']; ?></td>
-                          <td><?php echo $row['jumlah']; ?></td>
-                          <td><?php echo $row['unit_tersedia']; ?></td>
-                          <td><?php echo $row['biaya']; ?></td>
+                          <td><?php echo $row['id_barang']; ?></td>
+                          <td><?php echo $row['nama_barang']; ?></td>
+                          <td><?php echo $row['kategori']; ?></td>
+                          <td><?php echo $row['stok']; ?></td>
+                          <td><?php echo $row['harga']; ?></td>
                         </tr>
 <?php
 }
