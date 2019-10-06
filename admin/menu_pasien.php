@@ -81,7 +81,7 @@ if ( !isset($_SESSION['username']) ){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#">SIRINA - SISTEM INFORMASI RAWAT INAP</a>
+            <a class="navbar-brand" href="#">SISTEM INFORMASI INVENTORI</a>
           </div>
           <div class="collapse navbar-collapse justify-content-end">         
             <div class="input-group no-border"></div>
@@ -106,8 +106,8 @@ if ( !isset($_SESSION['username']) ){
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Data Pasien</h4>
-                  <p class="card-category">Tambah, Edit & Hapus Data Pasien Puskesmas</p>
+                  <h4 class="card-title ">Data Suplai</h4>
+                  <p class="card-category">Tambah Suplai untuk stok update</p>
                 </div>
                 <div class="card-body">
                   <button type="button" class="btn btn-success pull-left" data-toggle="modal" data-target="#modalTambah">
@@ -131,6 +131,8 @@ if ( !isset($_SESSION['username']) ){
 include "php/koneksi.php";
 
 $res = mysql_query("SELECT inventori.nama_barang, inventori_masuk.id, inventori_masuk.stok FROM inventori, inventori_masuk ORDER BY inventori_masuk.id");
+                
+
 while ($row = mysql_fetch_array($res)){
 ?>
                         <tr>
@@ -198,36 +200,38 @@ mysql_close();
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <form method="POST" action="php/tambahPasien.php">
-          <div class="modal-header"><b>Tambah Pasien</b></div>
+          <div class="modal-header"><b>Tambah Suplai</b></div>
           <div class="modal-body">
+            <!-- <div class="form-group">
+              <label>Id</label>
+              <input class="form-control" type="text" name="id">
+            </div> -->
+             <div class="form-group">
+              <label>Pilih Barang</label>
+              <select class="form-control" name="id_barang">
+             <?php
+             include "php/koneksi.php";
+              $res = mysql_query("SELECT * FROM inventori ORDER BY id_barang");
+              echo $res;
+              while ( $row = mysql_fetch_assoc($res) ){
+              ?>
+                <option value="<?php echo $row['id_barang'];?>"><?php echo $row['id_barang']. " : ". $row['nama_barang'];?></option>
+              <?php
+              }
+              ?>
+              </select>
+            </div><br>
+          
             <div class="form-group">
-              <label>Nik</label>
-              <input class="form-control" type="text" name="nik">
+              <label>Stok</label>
+              <input class="form-control" type="text" name="stok">
             </div>
-            <div class="form-group">
-              <label>Nama Pasien</label>
-              <input class="form-control" type="text" name="nama_pasien">
-            </div>
-            <div class="form-group">
-              <label>No Asuransi</label>
-              <input class="form-control" type="text" name="no_asuransi">
-            </div>
-            <div class="form-group">
-              <label>Alamat</label>
-              <input class="form-control" type="text" name="alamat">
-            </div>
-            <div class="form-group">
-              <label>Tgl Lahir</label>
-              <input class="form-control" type="date" name="tgl_lahir">
-            </div>
-            <div class="form-group">
-              <label>Umur</label>
-              <input class="form-control" type="text" name="umur">
-            </div>
+           
           </div>
           <div class="modal-footer">
             <input class="btn btn-success" type="submit" name="tambahkan" value="Tambah">
             <input class="btn btn-danger" type="reset" data-dismiss="modal" value="Batal">
+           
           </div>
         </form>
       </div>

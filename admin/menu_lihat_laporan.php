@@ -83,7 +83,7 @@ if ( !isset($_SESSION['username']) ){
       <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
-          <div class="navbar-wrapper"><a class="navbar-brand" href="#">SIRINA - SISTEM INFORMASI RAWAT INAP</a></div>
+          <div class="navbar-wrapper"><a class="navbar-brand" href="#">SISTEM INFORMASI INVENTORI</a></div>
          
           <div class="collapse navbar-collapse justify-content-end">         
             <div class="input-group no-border"></div>

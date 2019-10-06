@@ -3,17 +3,15 @@
 if ( isset($_POST['tambahkan']) ){
 	
 	$conn = mysql_connect("localhost", "root", "");
-	$db = mysql_select_db("rawat_inap");
+	$db = mysql_select_db("database");
 
-	$nik = $_POST['nik'];
-	$nama_pasien = $_POST['nama_pasien'];
-	$no_asuransi = $_POST['no_asuransi'];
-	$alamat = $_POST['alamat'];
-	$tgl_lahir = $_POST['tgl_lahir'];
-	$umur = $_POST['umur'];
+	$id = $_POST['id'];
+	$id_barang = $_POST['id_barang'];
+	$stok = $_POST['stok'];
 	
-	$sql = "INSERT INTO tabel_pasien(nik, nama_pasien, no_asuransi, alamat, tanggal_lahir, umur)".
-	" VALUES ('$nik', '$nama_pasien', '$no_asuransi', '$alamat', '$tgl_lahir', '$umur')";
+	
+	$sql = "INSERT INTO inventori_masuk(id, id_barang, stok)".
+	" VALUES ('$id', '$id_barang', '$stok')";
 
 	$result = mysql_query($sql, $conn);
 
