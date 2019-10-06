@@ -122,6 +122,7 @@ if ( !isset($_SESSION['username']) ){
                           <th>Id</th>
                           <th>Nama Barang</th>
                           <th>Stok</th>
+                          <th>Tanggal beli</th>
                          
                      
                         </tr>
@@ -130,7 +131,7 @@ if ( !isset($_SESSION['username']) ){
 <?php
 include "php/koneksi.php";
 
-$res = mysql_query("SELECT inventori.nama_barang, inventori_masuk.id, inventori_masuk.stok FROM inventori, inventori_masuk ORDER BY inventori_masuk.id");
+$res = mysql_query("SELECT inventori.nama_barang, inventori_masuk.id, inventori_masuk.stok, inventori_masuk.tanggal FROM inventori, inventori_masuk ORDER BY inventori_masuk.id");
                 
 
 while ($row = mysql_fetch_array($res)){
@@ -139,6 +140,7 @@ while ($row = mysql_fetch_array($res)){
                           <td><?php echo $row['id'];?></td>
                           <td><?php echo $row['nama_barang'];?></td>
                           <td><?php echo $row['stok'];?></td>
+                           <td><?php echo $row['tanggal'];?></td>
                         
                           
                         </tr>
@@ -226,7 +228,12 @@ mysql_close();
               <label>Stok</label>
               <input class="form-control" type="text" name="stok">
             </div>
-           
+            <br>
+              <div class="form-group">
+              <label>Tanggal Beli</label><br>
+              <input class="form-control" type="text" name="tanggal" value="<?php echo date('Y-m-d');?>" readonly>
+            </div>
+
           </div>
           <div class="modal-footer">
             <input class="btn btn-success" type="submit" name="tambahkan" value="Tambah">

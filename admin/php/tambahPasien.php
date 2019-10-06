@@ -8,10 +8,10 @@ if ( isset($_POST['tambahkan']) ){
 	$id = $_POST['id'];
 	$id_barang = $_POST['id_barang'];
 	$stok = $_POST['stok'];
+	$tanggal = $_POST['tanggal'];
 	
-	
-	$sql = "INSERT INTO inventori_masuk(id, id_barang, stok)".
-	" VALUES ('$id', '$id_barang', '$stok')";
+	$sql = "INSERT INTO inventori_masuk(id, id_barang, stok, tanggal)".
+	" VALUES ('$id', '$id_barang', '$stok', '$tanggal')";
 
 	$result = mysql_query($sql, $conn);
 
