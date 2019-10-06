@@ -162,7 +162,7 @@ if ($_SESSION['username'] == 'admin'){
           &copy;
           <script>
             document.write(new Date().getFullYear())
-          </script>, Develop by IT TEAM-1 <i class="fa fa-university fa-fw"></i> TIF POLITEKNIK NEGERI JEMBER
+          </script>, Develop by Abhinaya Tech <i class="fa fa-university fa-fw"></i> Teknik Informatika - Politeknik Negeri Jember
         </div>
       </div>
     </footer>

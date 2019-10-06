@@ -117,7 +117,7 @@ $status = "";
                     <p><a href="#modalTambah" class="btn btn-success" data-toggle="modal" aria-hidden="true">Tambah Pegawai</a></p>
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Data Pegawai
+                           
                             <input type="text" id="cari" placeholder="Cari ..." style="width: 200px; padding: 5px;">
                         </div>
                         <div class="panel-body">
