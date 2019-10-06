@@ -1,7 +1,7 @@
 <?php
 include "koneksi.php";
 $id = $_GET['id'];
-$sql = "DELETE FROM tabel_kamar WHERE no_kamar='$id'";
+$sql = "DELETE FROM inventori WHERE id_barang='$id'";
 $res = mysql_query($sql);
 
 if ($res){
