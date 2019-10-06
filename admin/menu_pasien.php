@@ -12,7 +12,7 @@ if ( !isset($_SESSION['username']) ){
   <link rel="apple-touch-icon" sizes="76x76" href="libs/assets/img/apple-icon.png">
  
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Pasien | Gigacom</title>
+  <title>Suplai | Gigacom</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -52,7 +52,7 @@ if ( !isset($_SESSION['username']) ){
           <li class="nav-item active ">
             <a class="nav-link" href="menu_pasien.php">
               <i class="fa fa-tasks fa-fw"></i>
-              <center><p>PASIEN</p></center>
+              <center><p>SUPLAI</p></center>
             </a>
           </li>
           <li class="nav-item ">
@@ -119,32 +119,26 @@ if ( !isset($_SESSION['username']) ){
                     <table class="table table-hover">
                       <thead class=" text-primary">
                         <tr>
-                          <th>Nik</th>
-                          <th>Nama Pasien</th>
-                          <th>No Asuransi</th>
-                          <th>Alamat</th>
-                          <th>Tgl Lahir</th>
-                          <th>Umur</th>
-                          <th width="5%"></th>
-                          <th width="5%"></th>
+                          <th>Id</th>
+                          <th>Nama Barang</th>
+                          <th>Stok</th>
+                         
+                     
                         </tr>
                       </thead>
                       <tbody id="tabelPasien">
 <?php
 include "php/koneksi.php";
 
-$res = mysql_query("SELECT * FROM tabel_pasien ORDER BY nama_pasien ASC");
+$res = mysql_query("SELECT inventori.nama_barang, inventori_masuk.id, inventori_masuk.stok FROM inventori, inventori_masuk ORDER BY inventori_masuk.id");
 while ($row = mysql_fetch_array($res)){
 ?>
                         <tr>
-                          <td><?php echo $row['nik'];?></td>
-                          <td><?php echo $row['nama_pasien'];?></td>
-                          <td><?php echo $row['no_asuransi'];?></td>
-                          <td><?php echo $row['alamat'];?></td>
-                          <td><?php echo $row['tanggal_lahir'];?></td>
-                          <td><?php echo $row['umur'];?></td>
-                          <td><a href="#modalUbah" class="btn btn-primary" data-toggle="modal" data-id="<?php echo $row['nik'];?>"><i class="fa fa-pencil"></i></td>
-                          <td><a href="php/hapusPasien.php?id=<?php echo $row['nik'];?>" onclick="return confirm('Yakin mau Hapus?')" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                          <td><?php echo $row['id'];?></td>
+                          <td><?php echo $row['nama_barang'];?></td>
+                          <td><?php echo $row['stok'];?></td>
+                        
+                          
                         </tr>
 <?php
 }

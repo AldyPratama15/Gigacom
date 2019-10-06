@@ -52,7 +52,7 @@ if ( !isset($_SESSION['username']) ){
           <li class="nav-item">
             <a class="nav-link" href="menu_pasien.php">
               <i class="fa fa-tasks fa-fw"></i>
-              <center><p>PASIEN</p></center>
+              <center><p>SUPLAI</p></center>
             </a>
           </li>
           <li class="nav-item">

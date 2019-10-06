@@ -66,12 +66,12 @@ if ($_SESSION['username'] == 'admin'){
                   <i class="fa fa-tasks fa-fw"></i>
                 </div>
                 <p class="card-category"></p>
-                <h3 class="card-title">Pasien</h3>
+                <h3 class="card-title">Suplai</h3>
               </div>
               <div class="card-footer">
                 <div class="stats">
                   <i class="material-icons text-danger"></i>
-                  <a href="menu_pasien.php">Data Pasien</a>
+                  <a href="menu_pasien.php">Data Suplai</a>
                 </div>
               </div>
             </div>
