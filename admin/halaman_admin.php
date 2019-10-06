@@ -15,7 +15,7 @@ if ( !isset($_SESSION['username']) ){
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Admin | SIRINA</title>
+    <title>Admin |GigaCom</title>
 
     <link href="libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="libs/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -42,7 +42,7 @@ if ( !isset($_SESSION['username']) ){
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Admin SIRINA</a>
+                <a class="navbar-brand" href="#">ADMIN SISTEM INFORMASI INVENTORI</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -63,7 +63,7 @@ if ( !isset($_SESSION['username']) ){
                     <ul class="nav" id="side-menu">
                         <li><a class="active" href="halaman_admin.php"><i class="fa fa-home fa-fw"></i> Home</a></li>
                         <li><a href="menu_pasien_admin.php"><i class="fa fa-child fa-fw"></i> Pasien</a></li>
-                        <li><a href="menu_kamar_admin.php"><i class="fa fa-bed fa-fw"></i> Kamar</a></li>
+                        <li><a href="menu_kamar_admin.php"><i class="fa fa-bed fa-fw"></i> Inventori</a></li>
                         <li><a href="menu_laporan_admin.php"><i class="fa fa-book fa-fw"></i> Laporan</a></li>
                         <li><a href="menu_pegawai.php"><i class="fa fa-group fa-fw"></i> Pegawai</a></li>
                     </ul>

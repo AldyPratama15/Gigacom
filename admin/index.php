@@ -120,12 +120,12 @@ if ($_SESSION['username'] == 'admin'){
                  <i class="fa fa-briefcase fa-fw"></i> 
                 </div>
                 <p class="card-category"></p>
-                <h3 class="card-title">Kamar</h3>
+                <h3 class="card-title">Inventori</h3>
               </div>
               <div class="card-footer">
                 <div class="stats">
                   <i class="material-icons"></i>
-                  <a href="menu_lihat_kamar.php">Data Kamar</a>
+                  <a href="menu_lihat_kamar.php">Data Inventori</a>
                 </div>
               </div>
             </div>
