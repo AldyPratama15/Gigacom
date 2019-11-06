@@ -16,7 +16,7 @@ if ( isset($_POST['tambahkan']) ){
 	$result = mysql_query($sql, $conn);
 
 	if ($result){
-		header("location:../menu_kamar_admin.php");
+		header("location:../inventori_admin.php");
 	}else {
 		die ("Gagal");
 	}

@@ -50,13 +50,13 @@ if ( !isset($_SESSION['username']) ){
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="menu_pasien.php">
+            <a class="nav-link" href="supplai.php">
               <i class="fa fa-tasks fa-fw"></i>
               <center><p>SUPLAI</p></center>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="menu_lihat_kamar.php">
+            <a class="nav-link" href="lihat_inventori.php">
               <i class="fa fa-briefcase fa-fw"></i>
               <center><p>INVENTORI</p></center>
             </a>

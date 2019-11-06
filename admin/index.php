@@ -71,7 +71,7 @@ if ($_SESSION['username'] == 'admin'){
               <div class="card-footer">
                 <div class="stats">
                   <i class="material-icons text-danger"></i>
-                  <a href="menu_pasien.php">Data Suplai</a>
+                  <a href="supplai.php">Data Suplai</a>
                 </div>
               </div>
             </div>
@@ -125,7 +125,7 @@ if ($_SESSION['username'] == 'admin'){
               <div class="card-footer">
                 <div class="stats">
                   <i class="material-icons"></i>
-                  <a href="menu_lihat_kamar.php">Data Inventori</a>
+                  <a href="lihat_inventori.php">Data Inventori</a>
                 </div>
               </div>
             </div>

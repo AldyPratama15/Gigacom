@@ -6,7 +6,7 @@ session_start();
 if ( !isset($_SESSION['username']) ){
     header("location:login.php");
 }else {
-    header("location:menu_pasien_admin.php");
+    header("location:inventori_admin.php");
 }
 ?>
 

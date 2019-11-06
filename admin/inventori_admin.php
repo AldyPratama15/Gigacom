@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <?php
@@ -61,7 +61,7 @@ if ( !isset($_SESSION['username']) ){
                     <ul class="nav" id="side-menu">
                         <!-- <li><a href="halaman_admin.php"><i class="fa fa-home fa-fw"></i> Home</a></li> -->
 <!--                         <li><a href="menu_pasien_admin.php"><i class="fa fa-child fa-fw"></i> Pasien</a></li>
- -->                        <li><a class="active" href="menu_kamar_admin.php"><i class="fa fa-bed fa-fw"></i> Inventori</a></li>
+ -->                        <li><a class="active" href="inventori_admin.php"><i class="fa fa-bed fa-fw"></i> Inventori</a></li>
                         <li><a href="menu_laporan_admin.php"><i class="fa fa-book fa-fw"></i> Laporan</a></li>
                         <li><a href="menu_pegawai.php"><i class="fa fa-group fa-fw"></i> Pegawai</a></li>
                     </ul>
@@ -110,7 +110,7 @@ while ( $row = mysql_fetch_assoc($res) ){
                                         <td><?php echo $row['stok'];?></td>
                                         <td><?php echo $row['harga'];?></td>
                                         <td><a href="#modalUbah" class="btn btn-primary" data-toggle="modal" data-id="<?php echo $row['id_barang'];?>"><i class="fa fa-pencil"></i></td>
-                                        <td><a href="php/hapusKamar.php?id=<?php echo $row['id_barang'];?>" onclick="return confirm('Yakin hapus data?')" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                                        <td><a href="php/hapus_inventori.php?id=<?php echo $row['id_barang'];?>" onclick="return confirm('Yakin hapus data?')" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
                                     </tr>
 <?php
 }
@@ -128,12 +128,12 @@ mysql_close();
     <div class="modal fade" tabindex="-1" role="dialog" id="modalTambah" aria-labelledby="modalTambahLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form action="php/tambahKamar.php" method="POST">
+                <form action="php/tambah_inventori.php" method="POST">
                 <div class="modal-header">
-                    <h2 class="modal-title" id="modalTambahLabel">Tambah Pasien</h2>
+                    <h2 class="modal-title" id="modalTambahLabel">Tambah Inventori</h2>
                 </div>
                 <div class="modal-body">
-                    <input class="form-control" type="text" name="id_barang" placeholder="Id Barang" readonly=""><br>
+                  
                     <input class="form-control" type="text" name="nama_barang" placeholder="Nama Barang"><br>
                  
                          <select class="form-control" name="kategori">
@@ -161,7 +161,7 @@ mysql_close();
     <div class="modal fade" id="modalUbah" tabindex="-1" aria-labelledby="modalUbahLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form method="POST" action="php/ubahKamar.php">
+                <form method="POST" action="php/ubah_inventori.php">
                     <div class="modal-header">
                         <h3 class="modal-title" id="modalUbahLabel">Ubah Data</h3>
                     </div>
@@ -201,7 +201,7 @@ mysql_close();
                 //menggunakan fungsi ajax untuk pengambilan data
                 $.ajax({
                     type : 'post',
-                    url : 'php/detailKamar.php',
+                    url : 'php/detail_inventori.php',
                     data :  'idx='+ idx,
                     success : function(data){
                     $('.hasil-data').html(data); //menampilkan data ke dalam modal
@@ -213,4 +213,3 @@ mysql_close();
     </script>
 </body>
 </html>
- -->

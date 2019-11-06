@@ -10,9 +10,9 @@ if ( !isset($_SESSION['username']) ){
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="libs/assets/img/apple-icon.png">
- 
+  
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Pegawai | GigaCom</title>
+   <title>Inventori | GigaCom</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -31,8 +31,8 @@ if ( !isset($_SESSION['username']) ){
         Tip 2: you can also add an image using data-image tag-->
       <div class="logo">
         <a class="simple-text logo-normal">
-         <i class="fa fa-th-list fa-fw"></i>
-         MENU 
+          <i class="fa fa-th-list fa-fw"></i>
+          MENU
         </a>
       </div>
       <div class="sidebar-wrapper">
@@ -55,7 +55,7 @@ if ( !isset($_SESSION['username']) ){
               <center><p>SUPLAI</p></center>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active ">
             <a class="nav-link" href="lihat_inventori.php">
               <i class="fa fa-briefcase fa-fw"></i>
               <center><p>INVENTORI</p></center>
@@ -67,7 +67,7 @@ if ( !isset($_SESSION['username']) ){
               <center><p>LAPORAN</p></center>
             </a>
           </li>
-          <li class="nav-item active ">
+          <li class="nav-item ">
             <a class="nav-link" href="menu_lihat_pegawai.php">
               <i class="fa fa-user fa-fw"></i>
               <center><p>PEGAWAI</p></center>
@@ -81,12 +81,13 @@ if ( !isset($_SESSION['username']) ){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#">SISTEM INFORMASI INVENTORI</a>
+            <a class="navbar-brand" href="dashboard.php">SISTEM INFORMASI INVENTORI</a>
           </div>
+         
           <div class="collapse navbar-collapse justify-content-end">         
             <div class="input-group no-border"></div>
             <ul class="navbar-nav">
-              <li><?php echo $_SESSION['username'];?></li>
+            <li><?php echo $_SESSION['username'];?></li>
               <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="navbarDropdownProfile" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-user fa-fw"></i> 
@@ -100,41 +101,43 @@ if ( !isset($_SESSION['username']) ){
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="content">
+       <div class="content">
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Data Pegawai</h4>
-                  <p class="card-category">Data Pegawai Yg Bekerja Di GigaCom</p>
+                  <h4 class="card-title ">Data Inventori</h4>
+                  <p class="card-category"> Data Invrntori yang tersedia</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
-                  <input type="text" id="cari" placeholder="Cari Data . . ." class="form-control" style="width: 200px; margin-top:7px; margin-left:0px;">
+                    <input type="text" id="cari" placeholder="Cari Data . . ." class="form-control" style="width: 200px; margin-top:7px; margin-left:0px;">
                     <table class="table table-hover">
                       <thead class=" text-primary">
                         <tr>
-                          <!-- <th>No</th> -->
-                          <th>Nama Pegawai</th>
-                          <th>Alamat</th>
-                          <th>Telp</th>
-                        </tr> 
+                          <th>Id Barang</th>
+                          <th>Nama Barang</th>
+                          <th>Kategori</th>
+                          <th>Stok</th>
+                          <th>Harga</th>
+                        </tr>
                       </thead>
-                      <tbody id="tabelPegawai">
+                      <tbody id="tabelKamar">
 <?php
 include "php/koneksi.php";
 
-$res = mysql_query("SELECT * FROM pegawai WHERE username <> 'Owner' ORDER BY nama");
-while ($tampil = mysql_fetch_array($res)){
-?> 
+$res = mysql_query("SELECT * FROM inventori ORDER BY kategori ASC");
+while ($row = mysql_fetch_array($res)) {
+?>
                         <tr>
-                          
-                          <td><?php echo $tampil['nama']; ?></td>
-                          <td><?php echo $tampil['alamat']; ?></td>
-                          <td><?php echo $tampil['telp']; ?></td>
+                          <td><?php echo $row['id_barang']; ?></td>
+                          <td><?php echo $row['nama_barang']; ?></td>
+                          <td><?php echo $row['kategori']; ?></td>
+                          <td><?php echo $row['stok']; ?></td>
+                          <td><?php echo $row['harga']; ?></td>
                         </tr>
-<?php 
+<?php
 }
 mysql_close();
 ?>
@@ -149,8 +152,8 @@ mysql_close();
       </div>
     </div>
   </div>
-    
-  <!--   Core JS Files   -->
+   
+   <!--   Core JS Files   -->
   <script src="libs/assets/js/jquery-3.3.1.min.js"></script>
   <script src="libs/assets/js/core/popper.min.js"></script>
   <script src="libs/assets/js/core/bootstrap-material-design.min.js"></script>
@@ -193,6 +196,7 @@ mysql_close();
   <script src="libs/assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="libs/assets/demo/demo.js"></script>
+ 
   <script type="text/javascript">
     $(document).ready(function() {
 
@@ -201,16 +205,15 @@ mysql_close();
         //Ambil data dari input dgn id="cari"
         var value = $(this).val().toLowerCase();
 
-        $("#tabelPegawai tr").filter(function() {
+        $("#tabelKamar tr").filter(function() {
 
-            //Jika tidak sesuai, maka toggle (hide)
-            //Jika sesuai, maka toggle (show)
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-
+          //Jika tidak sesuai, maka toggle (hide)
+          //Jika sesuai, maka toggle (show)
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
       });
-  	});
+		});
   </script>
-</body>
+ </body>
 
 </html>

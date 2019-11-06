@@ -12,7 +12,7 @@ if ( !isset($_SESSION['username']) ){
   <link rel="apple-touch-icon" sizes="76x76" href="libs/assets/img/apple-icon.png">
  
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>Pegawai | GigaCom</title>
+  <title>Suplai | Gigacom</title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
@@ -31,8 +31,8 @@ if ( !isset($_SESSION['username']) ){
         Tip 2: you can also add an image using data-image tag-->
       <div class="logo">
         <a class="simple-text logo-normal">
-         <i class="fa fa-th-list fa-fw"></i>
-         MENU 
+          <i class="fa fa-th-list fa-fw"></i>
+          MENU
         </a>
       </div>
       <div class="sidebar-wrapper">
@@ -49,7 +49,7 @@ if ( !isset($_SESSION['username']) ){
               <center><p>TRANSAKSI</p></center>
             </a>
           </li>
-          <li class="nav-item ">
+          <li class="nav-item active ">
             <a class="nav-link" href="supplai.php">
               <i class="fa fa-tasks fa-fw"></i>
               <center><p>SUPLAI</p></center>
@@ -67,7 +67,7 @@ if ( !isset($_SESSION['username']) ){
               <center><p>LAPORAN</p></center>
             </a>
           </li>
-          <li class="nav-item active ">
+          <li class="nav-item ">
             <a class="nav-link" href="menu_lihat_pegawai.php">
               <i class="fa fa-user fa-fw"></i>
               <center><p>PEGAWAI</p></center>
@@ -106,35 +106,47 @@ if ( !isset($_SESSION['username']) ){
             <div class="col-md-12">
               <div class="card">
                 <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Data Pegawai</h4>
-                  <p class="card-category">Data Pegawai Yg Bekerja Di GigaCom</p>
+                  <h4 class="card-title ">Data Suplai</h4>
+                  <p class="card-category">Tambah Suplai untuk stok update</p>
                 </div>
                 <div class="card-body">
+                  <button type="button" class="btn btn-success pull-left" data-toggle="modal" data-target="#modalTambah">
+                      <i class="fa fa-plus fa-fw"></i>
+                      Tambah Data
+                  </button>
                   <div class="table-responsive">
-                  <input type="text" id="cari" placeholder="Cari Data . . ." class="form-control" style="width: 200px; margin-top:7px; margin-left:0px;">
+                    <input type="text" id="cari" placeholder="Cari Data . . ." class="form-control" style="width: 200px; margin-top:7px; margin-left:0px;">
                     <table class="table table-hover">
                       <thead class=" text-primary">
                         <tr>
-                          <!-- <th>No</th> -->
-                          <th>Nama Pegawai</th>
-                          <th>Alamat</th>
-                          <th>Telp</th>
-                        </tr> 
+                          <th>Id</th>
+                          <th>Nama Barang</th>
+                          <th>Stok</th>
+                          <th>Tanggal beli</th>
+                          <th>Penanggung Jawab</th>
+                         
+                     
+                        </tr>
                       </thead>
-                      <tbody id="tabelPegawai">
+                      <tbody id="tabelPasien">
 <?php
 include "php/koneksi.php";
 
-$res = mysql_query("SELECT * FROM pegawai WHERE username <> 'Owner' ORDER BY nama");
-while ($tampil = mysql_fetch_array($res)){
-?> 
+$res = mysql_query("SELECT * FROM viewsupplai ORDER BY id_supplai ASC");
+                
+
+while ($row = mysql_fetch_array($res)){
+?>
                         <tr>
+                          <td><?php echo $row['id_supplai'];?></td>
+                          <td><?php echo $row['namabarang'];?></td>
+                          <td><?php echo $row['stokbarang'];?></td>
+                           <td><?php echo $row['tanggalbeli'];?></td>
+                          <td><?php echo $row['namapegawai'];?></td>
+                        
                           
-                          <td><?php echo $tampil['nama']; ?></td>
-                          <td><?php echo $tampil['alamat']; ?></td>
-                          <td><?php echo $tampil['telp']; ?></td>
                         </tr>
-<?php 
+<?php
 }
 mysql_close();
 ?>
@@ -144,12 +156,6 @@ mysql_close();
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-    
   <!--   Core JS Files   -->
   <script src="libs/assets/js/jquery-3.3.1.min.js"></script>
   <script src="libs/assets/js/core/popper.min.js"></script>
@@ -193,24 +199,119 @@ mysql_close();
   <script src="libs/assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="libs/assets/demo/demo.js"></script>
+
+  <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form method="POST" action="php/tambah_supplai.php">
+          <div class="modal-header"><b>Tambah Suplai</b></div>
+          <div class="modal-body">
+            <!-- <div class="form-group">
+              <label>Id</label>
+              <input class="form-control" type="text" name="id">
+            </div> -->
+             <div class="form-group">
+              <label>Pilih Barang</label>
+              <select class="form-control" name="id_barang">
+             <?php
+             include "php/koneksi.php";
+              $res = mysql_query("SELECT * FROM inventori ORDER BY id_barang");
+              echo $res;
+              while ( $row = mysql_fetch_assoc($res) ){
+              ?>
+                <option value="<?php echo $row['id_barang'];?>"><?php echo $row['id_barang']. " : ". $row['nama_barang'];?></option>
+              <?php
+              }
+              ?>
+              </select>
+            </div><br>
+          
+            <div class="form-group">
+              <label>Stok</label>
+              <input class="form-control" type="text" name="stok">
+            </div>
+            <br>
+              <div class="form-group">
+              <label>Tanggal Beli</label><br>
+              <input class="form-control" type="text" name="tanggal" value="<?php echo date('Y-m-d');?>" readonly>
+            </div><br>
+              <div class="form-group">
+              <label>Penanggung Jawab</label><br>
+<?php
+$res = mysql_query("SELECT id_pegawai FROM pegawai WHERE username ='". $_SESSION['username']. "'");
+while ( $row = mysql_fetch_assoc($res) ){
+?>
+          <input class="form-control" name="id_pegawai" type="text" value="<?php echo $row['id_pegawai'];?>" readonly>
+<!--                 <input type="hidden" name="id_pegawai" value="<?php echo $row['nip'];?>">
+ --><?php
+}
+mysql_close();
+?>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input class="btn btn-success" type="submit" name="tambahkan" value="Tambah">
+            <input class="btn btn-danger" type="reset" data-dismiss="modal" value="Batal">
+           
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="modalUbah" tabindex="-1" aria-labelledby="modalUbahLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <form method="POST" action="php/ubahPasien.php">
+          <div class="modal-header">
+            <b class="modal-title" id="modalUbahLabel">Ubah Data</b>
+          </div>
+          <div class="modal-body">
+              <!-- Data ubah ada disini -->
+              <div class="hasil-data"></div>
+          </div>
+          <div class="modal-footer">
+              <input class="btn btn-primary" type="submit" name="ubahdata" value="Ubah">
+              <input class="btn btn-danger" data-dismiss="modal" type="reset" value="Batal">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
   <script type="text/javascript">
     $(document).ready(function() {
 
       $("#cari").on("keyup", function(){
 
-        //Ambil data dari input dgn id="cari"
-        var value = $(this).val().toLowerCase();
+          //Ambil data dari input dgn id="cari"
+          var value = $(this).val().toLowerCase();
 
-        $("#tabelPegawai tr").filter(function() {
+          $("#tabelPasien tr").filter(function() {
 
-            //Jika tidak sesuai, maka toggle (hide)
-            //Jika sesuai, maka toggle (show)
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+              //Jika tidak sesuai, maka toggle (hide)
+              //Jika sesuai, maka toggle (show)
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+
+          });
+
+      });
+
+      $('#modalUbah').on('show.bs.modal', function (e) {
+          var idx = $(e.relatedTarget).data('id');
+          //menggunakan fungsi ajax untuk pengambilan data
+          $.ajax({
+              type : 'post',
+              url : 'php/detailPasien.php',
+              data :  'idx='+ idx,
+              success : function(data){
+              $('.hasil-data').html(data);//menampilkan data ke dalam modal
+              }
+          });
 
         });
-      });
-  	});
-  </script>
-</body>
+			});
+    </script>
+  </body>
 
 </html>

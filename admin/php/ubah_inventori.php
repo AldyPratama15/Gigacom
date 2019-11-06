@@ -1,4 +1,4 @@
-<!-- <?php
+<?php
 if ( isset($_POST['ubahdata']) ){
     include "koneksi.php";
 
@@ -14,10 +14,10 @@ if ( isset($_POST['ubahdata']) ){
     if ($sql) {
         //jika  berhasil tampil ini
         echo "Data Berhasil Diubah"."</br>";
-        echo "<script>document.location='../menu_kamar_admin.php'</script>";
+        echo "<script>document.location='../inventori_admin.php'</script>";
     } else {
         // jika gagal tampil ini
         echo "Gagal Melakukan Perubahan: ";
     }
 }
-?> -->
+?>
