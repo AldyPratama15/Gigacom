@@ -6,7 +6,7 @@
 
         $sql = "SELECT * FROM inventori WHERE id_barang = '$id'";
         $res = mysql_query($sql);
-
+        
         while ( $row = mysql_fetch_assoc($res) ){
             
 

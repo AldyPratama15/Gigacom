@@ -109,7 +109,7 @@ if ( !isset($_SESSION['username']) ){
                   <h4 class="card-title">Transaksi</h4>
                   <p class="card-category">Transaksi Gigacom</p>
                 </div>
-                <div class="card-body">
+                <div class="card-body" id="transaksi">
                  
                  <form method="POST" action="#">
          
@@ -117,25 +117,37 @@ if ( !isset($_SESSION['username']) ){
           
              <div class="form-group">
               <label>Pilih Barang</label>
-              <select class="form-control" name="id_barang">
+              <select class="form-control" name="id_barang"  required>
+           
              <?php
              include "php/koneksi.php";
               $res = mysql_query("SELECT * FROM inventori ORDER BY id_barang");
               echo $res;
               while ( $row = mysql_fetch_assoc($res) ){
               ?>
-                <option value="<?php echo $row['id_barang'];?>"><?php echo $row['id_barang']. " : ". $row['nama_barang'];?></option>
+
+                <option value="<?php echo $row['id_barang'];?>"><?php echo $row['stok']. " : ". $row['nama_barang'];?></option>
+                
               <?php
               }
               ?>
               </select>
             </div>
             <br>
-            <div class="form-group">
-              <label>Harga Satuan</label>
-              <input class="form-control" type="text" name="harga">
+  <label>Harga</label>
+<?php
+ $p=mysql_query("select * from inventori");
+ while($dp=mysql_fetch_array($p)) {
+ ?>
+ <input value="<?php echo $dp['harga'];?>" class="form-control" readonly>
+ <?php } ?>
+ </select><br>
+
+           <!--  <div class="form-group">
+              <label>Harga Satuan</label><br>
+              <input class="form-control" name="harga" readonly >
             </div>
-            <br>
+            <br> -->
 
             <div class="form-group">
               <label>Jumlah Beli</label>
@@ -158,8 +170,7 @@ $res = mysql_query("SELECT id_pegawai FROM pegawai WHERE username ='". $_SESSION
 while ( $row = mysql_fetch_assoc($res) ){
 ?>
           <input class="form-control" name="id_pegawai" type="text" value="<?php echo $row['id_pegawai'];?>" readonly>
-<!--                 <input type="hidden" name="id_pegawai" value="<?php echo $row['nip'];?>">
- --><?php
+          <?php
 }
 mysql_close();
 ?>
@@ -185,29 +196,7 @@ mysql_close();
                      
                         </tr>
                       </thead>
-                      <tbody id="tabelPasien">
-<!-- <?php
-include "php/koneksi.php";
-
-$res = mysql_query("SELECT * FROM viewsupplai ORDER BY id_supplai ASC");
-                
-
-while ($row = mysql_fetch_array($res)){
-?>
-                        <tr>
-                          <td><?php echo $row['id_supplai'];?></td>
-                          <td><?php echo $row['namabarang'];?></td>
-                          <td><?php echo $row['stokbarang'];?></td>
-                           <td><?php echo $row['tanggalbeli'];?></td>
-                          <td><?php echo $row['namapegawai'];?></td>
-                        
-                          
-                        </tr>
-<?php
-}
-mysql_close();
-?> -->
-                      </tbody>
+                     
                     </table>
 
                   </div>
@@ -264,72 +253,6 @@ mysql_close();
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="libs/assets/demo/demo.js"></script>
 
-  <div class="modal fade" id="modalTambah" tabindex="-1" aria-labelledby="modalTambahLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <form method="POST" action="php/tambahTransaksi.php">
-          <div class="modal-header">
-            <b class="modal-title" id="modalTambahLabel">Transaksi Baru</b>
-          </div>
-          <div class="modal-body">
-            <div class="form-group">
-              <label>Id Transaksi</label>
-              <input class="form-control" type="text" value="<?php echo date('YmdHis');?>" disabled>
-              <input type="hidden" name="id_transaksi" value="<?php echo date('YmdHis');?>">
-            </div>
-            <div class="form-group">
-              <label>Pilih Pasien</label>
-              <select class="form-control" name="id_pasien">
-<?php
-$res = mysql_query("SELECT * FROM tabel_pasien ORDER BY nik");
-while ( $row = mysql_fetch_assoc($res) ){
-?>
-                <option value="<?php echo $row['nik'];?>"><?php echo $row['nik']. " : ". $row['nama_pasien'];?></option>
-<?php
-}
-?>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Pilih Kamar</label>
-              <select class="form-control" name="id_kamar">
-<?php
-$res = mysql_query("SELECT * FROM tabel_kamar ORDER BY no_kamar");
-while ( $row = mysql_fetch_assoc($res) ) {
-?>
-                <option value="<?php echo $row['no_kamar'];?>"><?php echo $row['no_kamar']. " : ". $row['kelas']. " : tersedia(". $row['unit_tersedia']. ")";?></option>
-<?php
-}
-?>
-              </select>
-            </div>
-            <div class="form-group">
-              <label>Id Pegawai</label>
-<?php
-$res = mysql_query("SELECT nip FROM tabel_pegawai WHERE username ='". $_SESSION['username']. "'");
-while ( $row = mysql_fetch_assoc($res) ){
-?>
-                <input class="form-control" type="text" value="<?php echo $row['nip'];?>" disabled>
-                <input type="hidden" name="id_pegawai" value="<?php echo $row['nip'];?>">
-<?php
-}
-mysql_close();
-?>
-            </div>
-            <div class="form-group">
-              <label>Tanggal Masuk</label>
-              <input class="form-control" type="date" name="tgl_masuk">
-            </div>
-          </div>
-          <div class="modal-footer">
-            <input class="btn btn-primary" type="submit" name="tambahkan" value="Tambah">
-            <input class="btn btn-danger" data-dismiss="modal" type="reset" value="Batal">
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-
   <script type="text/javascript">
     $(document).ready(function() {
 
@@ -346,7 +269,28 @@ mysql_close();
 
         });
       });
-    });
+
+
+
+$(document).ready(function(){
+$("#id_barang").click(function(){
+ var id_barang=$("#id_barang").val();
+ $.ajax({
+ url:"./php/get_data.php",
+ data:"id_barang="+id_barang,
+ success:function(value){
+ var data = value.split(",");
+ $("#harga").val(data[0]);
+ 
+ 
+ }
+ 
+ 
+ });
+ 
+ });
+ });
+
   </script>
 </body>
 

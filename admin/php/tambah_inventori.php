@@ -6,12 +6,12 @@ if ( isset($_POST['tambahkan']) ){
 
 	$id_barang = $_POST['id_barang'];
 	$nama_barang = $_POST['nama_barang'];
-	$kategori = $_POST['kategori'];
+	$nama = $_POST['nama'];
 	$stok = $_POST['stok'];
 	$harga = $_POST['harga'];
 	
-	$sql = "INSERT INTO inventori(id_barang, nama_barang, kategori, stok, harga)".
-	" VALUE ('$id_barang', '$nama_barang', '$kategori', '$stok', '$harga')";
+	$sql = "INSERT INTO inventori(id_barang, nama_barang, nama, stok, harga)".
+	" VALUE ('$id_barang', '$nama_barang', '$nama', '$stok', '$harga')";
 
 	$result = mysql_query($sql, $conn);
 

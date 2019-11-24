@@ -62,6 +62,8 @@ if ( !isset($_SESSION['username']) ){
                         <!-- <li><a href="halaman_admin.php"><i class="fa fa-home fa-fw"></i> Home</a></li> -->
 <!--                         <li><a href="menu_pasien_admin.php"><i class="fa fa-child fa-fw"></i> Pasien</a></li>
  -->                        <li><a href="inventori_admin.php"><i class="fa fa-bed fa-fw"></i> Inventori</a></li>
+  <li><a href="kategori_admin.php" ><i class="fa fa-pencil fa-fw"></i> Kategori</a></li>
+
                         <li><a class="active" href="menu_laporan_admin.php"><i class="fa fa-book fa-fw"></i> Laporan</a></li>
                         <li><a href="menu_pegawai.php"><i class="fa fa-group fa-fw"></i> Pegawai</a></li>
                     </ul>

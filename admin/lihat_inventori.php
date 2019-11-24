@@ -127,13 +127,13 @@ if ( !isset($_SESSION['username']) ){
 <?php
 include "php/koneksi.php";
 
-$res = mysql_query("SELECT * FROM inventori ORDER BY kategori ASC");
+$res = mysql_query("SELECT * FROM inventori ORDER BY nama ASC");
 while ($row = mysql_fetch_array($res)) {
 ?>
                         <tr>
                           <td><?php echo $row['id_barang']; ?></td>
                           <td><?php echo $row['nama_barang']; ?></td>
-                          <td><?php echo $row['kategori']; ?></td>
+                          <td><?php echo $row['nama']; ?></td>
                           <td><?php echo $row['stok']; ?></td>
                           <td><?php echo $row['harga']; ?></td>
                         </tr>

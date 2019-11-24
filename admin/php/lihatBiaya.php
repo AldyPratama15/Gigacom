@@ -1,12 +1,12 @@
 <?php
 include "koneksi.php";
 
-if ( isset($_POST['noka']) ){
-	$noka = $_POST['noka'];
+if ( isset($_POST['idba']) ){
+	$noka = $_POST['idba'];
 
-	$res = mysql_query("SELECT biaya FROM tabel_kamar WHERE no_kamar = '$noka'");
+	$res = mysql_query("SELECT harga FROM inventori WHERE id_barang = 'idba'");
 	while ( $row = mysql_fetch_assoc($res) ){
-		echo $row['biaya'];
+		echo $row['harga'];
 	}
 
 	mysql_close();
