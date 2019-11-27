@@ -228,7 +228,7 @@ mysql_close();
           
             <div class="form-group">
               <label>Stok</label>
-              <input class="form-control" type="text" name="stok">
+              <input class="form-control" type="number" name="stok" required>
             </div>
             <br>
               <div class="form-group">

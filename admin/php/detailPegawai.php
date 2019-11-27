@@ -10,9 +10,9 @@ if( isset($_POST['idx'])) {
     while ( $row = mysql_fetch_assoc($res) ){
 
         echo "<input type='' class='form-control' name='id_pegawai' readonly value=". $row['id_pegawai']."><br>";
-        echo "<input type='text' class='form-control' name='nama' value='". $row['nama']. "'><br>";
-        echo "<input type='text' class='form-control' name='alamat' value='". $row['alamat']. "'><br>";
-         echo "<input type='text' class='form-control' name='telp' value='". $row['telp']. "'><br>";
+        echo "<input type='text' class='form-control' name='nama' required placeholder='Nama' value='". $row['nama']. "'><br>";
+        echo "<input type='text' class='form-control' required placeholder='alamat' name='alamat' value='". $row['alamat']. "'><br>";
+         echo "<input type='number' class='form-control' required placeholder='Telp' name='telp' value='". $row['telp']. "'><br>";
         
     }
 

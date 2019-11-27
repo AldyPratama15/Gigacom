@@ -175,11 +175,11 @@ mysql_close();
                     </div>
                     <div class="modal-body">
                        <!--  <input class="form-control" type="text" name="id_pegawai" id="id_pegawai" placeholder="Nomor" onkeyup="cek_form_tambah()"><br> -->
-                        <input class="form-control" type="text" name="nama" id="nama" placeholder="Nama Pegawai" onkeyup="cek_form_tambah()"><br>
-                        <input class="form-control" type="text" name="alamat" id="alamat" placeholder="Alamat" onkeyup="cek_form_tambah()"><br>
-                        <input class="form-control" type="text" name="telp" id="telp" placeholder="Telp" onkeyup="cek_form_tambah()"><br>
+                        <input class="form-control" type="text" name="nama" id="nama" placeholder="Nama Pegawai" onkeyup="cek_form_tambah()" required><br>
+                        <input class="form-control" type="text" name="alamat" id="alamat" placeholder="Alamat" onkeyup="cek_form_tambah()" required><br>
+                        <input class="form-control" type="number" name="telp" id="telp" placeholder="Telp" onkeyup="cek_form_tambah()" required><br>
                          
-                         <select class="form-control" name="jabatan" onkeyup="cek_form_tambah()">
+                         <select class="form-control" name="jabatan" onkeyup="cek_form_tambah()" required>
                          <option value="">Pilih Jabatan :</option>
                         <option value="Owner">Owner</option>
                         <option value="Karyawan">Karyawan</option> 
@@ -189,9 +189,9 @@ mysql_close();
                         
 
 
-                        <input class="form-control" type="text" name="username" id="username" placeholder="Username" onkeyup="cek_form_tambah()"><br>
+                        <input class="form-control" type="text" name="username" id="username" placeholder="Username" onkeyup="cek_form_tambah()" required><br>
 
-                        <input class="form-control" type="password" name="password" id="password" placeholder="Password" onkeyup="cek_form_tambah()"><br>
+                        <input class="form-control" type="password" name="password" id="password" placeholder="Password" onkeyup="cek_form_tambah()" required><br>
                        <!--  <input class="form-control" type="password" id="" placeholder="Konfirmasi Password" onkeyup="cek_form_tambah()"> -->
                     </div>
                     <div class="modal-footer">
