@@ -137,8 +137,7 @@ mysql_close();
                   
                     <input required class="form-control" type="text" name="nama_barang" placeholder="Nama Barang"><br>
                  
-                        <select name="nama" class="form-control" required>
-    <option>--- Pilih kategori ---</option>
+                        <select name="nama" class="form-control" required>    
     <?php
     mysql_connect("localhost", "root", "");
     mysql_select_db("database");

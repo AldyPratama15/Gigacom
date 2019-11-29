@@ -111,14 +111,15 @@ if ( !isset($_SESSION['username']) ){
                 </div>
                 <div class="card-body" id="transaksi">
                  
-                 <form method="POST" action="#">
+                 <form method="POST" action="php/tambahkeranjang.php">
          
           <div class="modal-body">
           
              <div class="form-group">
               <label>Pilih Barang</label>
-              <select class="form-control" name="id_barang"  required>
+              <select class="form-control" name="id_barang" id="id_barang"  >
            
+                <option required>- - Pilih Barang - -</option>
              <?php
              include "php/koneksi.php";
               $res = mysql_query("SELECT * FROM inventori ORDER BY id_barang");
@@ -126,22 +127,17 @@ if ( !isset($_SESSION['username']) ){
               while ( $row = mysql_fetch_assoc($res) ){
               ?>
 
-                <option value="<?php echo $row['id_barang'];?>"><?php echo $row['stok']. " : ". $row['nama_barang'];?></option>
+                <option value="<?php echo $row['id_barang'];?>" data-harga="<?php echo $row['harga'] ?>" ><?php echo $row['stok']. " : ". $row['nama_barang'];?></option>
                 
               <?php
               }
               ?>
               </select>
             </div>
-            <br>
+         
   <label>Harga</label>
-<?php
- $p=mysql_query("select * from inventori");
- while($dp=mysql_fetch_array($p)) {
- ?>
- <input value="<?php echo $dp['harga'];?>" class="form-control" readonly>
- <?php } ?>
- </select><br>
+  <input class="form-control" type="text" name="harga" id="harga" readonly>
+<br>
 
            <!--  <div class="form-group">
               <label>Harga Satuan</label><br>
@@ -151,12 +147,12 @@ if ( !isset($_SESSION['username']) ){
 
             <div class="form-group">
               <label>Jumlah Beli</label>
-              <input class="form-control" type="text" name="jubel">
+              <input class="form-control" type="number" id="jubel" name="jumlah" required>
             </div>
-            <br>
+           
             <div class="form-group">
-              <label>Total Harga</label>
-              <input class="form-control" type="text" name="jubel">
+              <label>Total Harga</label><br>
+              <input class="form-control" type="text" id="total" name="total" readonly>
             </div>
             <br>
               <div class="form-group">
@@ -182,22 +178,52 @@ mysql_close();
            
           </div>
         </form>
-            <table class="table table-hover">
-                      <thead class=" text-primary">
-                        <tr>
-                          <th>Id</th>
+            <div class="panel-body">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
                           <th>Nama Barang</th>
                           <th>Harga Satuan</th>
                           <th>Jumlah Beli</th>
                           <th>Total Harga</th>
                           <th>Tanggal Beli</th>
                           <th>Penanggung Jawab</th>
-                         
-                     
-                        </tr>
-                      </thead>
-                     
-                    </table>
+                                    </tr>
+                                </thead>
+                                <tbody>
+<?php
+include "php/koneksi.php";
+
+// SELECT tabel_transaksi.id_transaksi, tabel_pasien.nama_pasien, tabel_transaksi.id_kamar, tabel_pegawai.nama_pegawai, tabel_transaksi.tanggal_masuk
+// FROM tabel_transaksi
+// INNER JOIN tabel_pasien ON tabel_pasien.nik = tabel_transaksi.id_pasien
+// INNER JOIN tabel_pegawai ON tabel_pegawai.nip = tabel_transaksi.id_pegawai
+// WHERE tabel_transaksi.biaya = 0
+// ORDER BY tabel_transaksi.id_transaksi";
+
+$res = mysql_query("SELECT inventori.nama_barang, transaksi_tmp.harga, transaksi_tmp.jumlah, transaksi_tmp.total, transaksi_tmp.tanggal, pegawai.nama 
+FROM transaksi_tmp 
+INNER JOIN inventori ON inventori.id_barang = transaksi_tmp.id_barang  
+INNER JOIN pegawai on pegawai.id_pegawai = transaksi_tmp.id_pegawai 
+ORDER BY transaksi_tmp.id_transaksi");
+while ( $row = mysql_fetch_assoc($res) ){
+?>
+                                    <tr>
+                                        <td><?php echo $row['nama_barang'];?></td>
+                                        <td><?php echo $row['harga'];?></td>
+                                        <td><?php echo $row['jumlah'];?></td>
+                                        <td><?php echo $row['total'];?></td>
+                                        <td><?php echo $row['tanggal'];?></td>
+                                        <td><?php echo $row['nama'];?></td>
+                                        </tr>
+<?php
+}
+mysql_close();
+?>
+                                </tbody>
+                            </table>
+                        </div>
+          
 
                   </div>
                 </div>
@@ -270,27 +296,18 @@ mysql_close();
         });
       });
 
+      $("#id_barang").change(function(){
+      var harga = $(this).find(":selected").data("harga")
+      $("#harga").val(harga)
+      })
+    });
 
 
-$(document).ready(function(){
-$("#id_barang").click(function(){
- var id_barang=$("#id_barang").val();
- $.ajax({
- url:"./php/get_data.php",
- data:"id_barang="+id_barang,
- success:function(value){
- var data = value.split(",");
- $("#harga").val(data[0]);
- 
- 
- }
- 
- 
- });
- 
- });
- });
-
+      $("#jubel").on("keyup",function() {
+       var harga = $("#harga").val();
+       var jubel = $("#jubel").val();
+       $("#total").val(harga * jubel);
+      });
   </script>
 </body>
 
