@@ -158,7 +158,7 @@ if ( !isset($_SESSION['username']) ){
            
             <div class="form-group">
               <label>Total Harga</label><br>
-              <input class="form-control" type="text" id="total" name="total" readonly>
+              <input class="form-control" type="number" id="total" name="total" readonly>
             </div>
             <br>
               <div class="form-group">
@@ -222,9 +222,9 @@ while ( $row = mysql_fetch_assoc($res) ){
 ?>
                                     <tr>
                                         <td><?php echo $row['nama_barang'];?></td>
-                                        <td><?php echo $row['harga'];?></td>
-                                        <td><?php echo $row['jumlah'];?></td>
-                                        <td><?php echo $row['total'];?></td>
+                                        <td><?php echo number_format($row['harga']);?></td>
+                                        <td><?php echo number_format($row['jumlah']);?></td>
+                                        <td><?php echo number_format($row['total']);?></td>
                                         <td><?php echo $row['tanggal'];?></td>
                                         <td><?php echo $row['nama'];?></td>
                 <td><a href="php/hapus_tmp.php?id_transaksi=<?php echo $row['id_transaksi'];?>" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
@@ -235,6 +235,28 @@ mysql_close();
 ?>
                                 </tbody>
                             </table>
+
+<?php
+include "php/koneksi.php";
+$res = mysql_query("SELECT sum(total) as total_belanja FROM transaksi_tmp ");
+while ( $row = mysql_fetch_assoc($res) ){
+?>
+              <div class="form-group" style="width: 300px;"><br>  
+              <label>Total Belanja</label>
+              <input class="form-control" type="text" id="total_belanja" name="total_belanja" value="<?php echo $row['total_belanja']?>" onkeyup="sum();" readonly>
+            </div><br>
+<?php
+}
+mysql_close();
+?>
+             <div class="form-group" style="width: 300px;"> 
+              <label>Pembayaran</label>
+              <input class="form-control" type="number" id="pembayaran" name="pembayaran" onkeyup="sum();" required>
+            </div><br>
+             <div class="form-group" style="width: 300px;"><br>  
+              <label>Kembalian</label>
+              <input class="form-control" type="number" id="kembalian" name="kembalian" readonly>
+            </div>
                             <input class="btn btn-success" type="submit" id="bayar" name="bayar" value="Bayar">
                         </div>
           
@@ -327,13 +349,27 @@ mysql_close();
     });
 
 
-  
+function sum() {
+      var pembayaran = document.getElementById('pembayaran').value;
+      var total_belanja = document.getElementById('total_belanja').value;
+      var result = parseInt(pembayaran) - parseInt(total_belanja);
+      if (!isNaN(result)) {
+         document.getElementById('kembalian').value = result;
+      }
+}
+  // $("#pembayaran").on("keyup",function() {
+  //   var pembayaran = $("#pembayaran").val();
+  //   var total_belanja = $("#total_belanja").val();
+  //   $("#kembalian").val(pembayaran - total_belanja);
+  // });
+   
+
       $("#jubel").on("keyup",function() {
        var harga = $("#harga").val();
        var jubel = $("#jubel").val();
        var stok = $("#stok").val();
        $("#total").val(harga * jubel);
-       if (jubel >= stok) {
+       if (parseInt(jubel) > parseInt(stok)) {
         alert("Pembelian melebihi stok barang");
         document.getElementById("tambahkan").disabled = true;
        }else{
