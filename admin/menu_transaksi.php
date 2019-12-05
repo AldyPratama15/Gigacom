@@ -17,6 +17,7 @@ if ( !isset($_SESSION['username']) ){
   <!--     Fonts and icons     -->
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="libs/assets/dist/css/select2.min.css">
   <!-- CSS Files -->
   <link href="libs/assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
@@ -127,7 +128,7 @@ if ( !isset($_SESSION['username']) ){
               while ( $row = mysql_fetch_assoc($res) ){
               ?>
 
-                <option value="<?php echo $row['id_barang'];?>" data-harga="<?php echo $row['harga'] ?>" ><?php echo $row['stok']. " : ". $row['nama_barang'];?></option>
+                <option value="<?php echo $row['id_barang'];?>" data-harga="<?php echo $row['harga'] ?>" data-stok="<?php echo $row['stok'] ?>" ><?php echo $row['id_barang']. " : ". $row['nama_barang'];?></option>
                 
               <?php
               }
@@ -144,6 +145,11 @@ if ( !isset($_SESSION['username']) ){
               <input class="form-control" name="harga" readonly >
             </div>
             <br> -->
+
+ <div class="form-group">
+              <label>Jumlah Stok Terkini</label><br>
+              <input class="form-control" type="number" id="stok" name="stok" readonly>
+            </div>
 
             <div class="form-group">
               <label>Jumlah Beli</label>
@@ -173,7 +179,7 @@ mysql_close();
             </div>
           </div>
    <div class="modal-footer">
-            <input class="btn btn-success" type="submit" name="tambahkan" value="Tambah">
+            <input class="btn btn-success" type="submit" name="tambahkan" id="tambahkan" value="Tambah" disabled="disabled">
             <input class="btn btn-danger" type="reset" data-dismiss="modal" value="Batal">
            
           </div>
@@ -199,20 +205,15 @@ mysql_close();
                           <th>Total Harga</th>
                           <th>Tanggal Beli</th>
                           <th>Penanggung Jawab</th>
+                          <th>Aksi</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
 <?php
 include "php/koneksi.php";
 
-// SELECT tabel_transaksi.id_transaksi, tabel_pasien.nama_pasien, tabel_transaksi.id_kamar, tabel_pegawai.nama_pegawai, tabel_transaksi.tanggal_masuk
-// FROM tabel_transaksi
-// INNER JOIN tabel_pasien ON tabel_pasien.nik = tabel_transaksi.id_pasien
-// INNER JOIN tabel_pegawai ON tabel_pegawai.nip = tabel_transaksi.id_pegawai
-// WHERE tabel_transaksi.biaya = 0
-// ORDER BY tabel_transaksi.id_transaksi";
-
-$res = mysql_query("SELECT inventori.nama_barang, transaksi_tmp.harga, transaksi_tmp.jumlah, transaksi_tmp.total, transaksi_tmp.tanggal, pegawai.nama 
+$res = mysql_query("SELECT inventori.nama_barang, transaksi_tmp.harga, transaksi_tmp.jumlah, transaksi_tmp.total, transaksi_tmp.tanggal, pegawai.nama , transaksi_tmp.id_transaksi
 FROM transaksi_tmp 
 INNER JOIN inventori ON inventori.id_barang = transaksi_tmp.id_barang  
 INNER JOIN pegawai on pegawai.id_pegawai = transaksi_tmp.id_pegawai 
@@ -226,6 +227,7 @@ while ( $row = mysql_fetch_assoc($res) ){
                                         <td><?php echo $row['total'];?></td>
                                         <td><?php echo $row['tanggal'];?></td>
                                         <td><?php echo $row['nama'];?></td>
+                <td><a href="php/hapus_tmp.php?id_transaksi=<?php echo $row['id_transaksi'];?>" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
                                         </tr>
 <?php
 }
@@ -291,8 +293,15 @@ mysql_close();
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="libs/assets/demo/demo.js"></script>
 
+  <script src="libs/assets/dist/js/select2.min.js"></script>
+  
+
   <script type="text/javascript">
     $(document).ready(function() {
+      $("#id_barang").select2({
+        allowClear: true,
+        minimumInputLength: 1
+      })
 
       $("#cari").on("keyup", function(){
 
@@ -311,16 +320,26 @@ mysql_close();
 
       $("#id_barang").change(function(){
       var harga = $(this).find(":selected").data("harga")
+      var stok = $(this).find(":selected").data("stok")
       $("#harga").val(harga)
+      $("#stok").val(stok)
       })
     });
 
 
-
+  
       $("#jubel").on("keyup",function() {
        var harga = $("#harga").val();
        var jubel = $("#jubel").val();
+       var stok = $("#stok").val();
        $("#total").val(harga * jubel);
+       if (jubel >= stok) {
+        alert("Pembelian melebihi stok barang");
+        document.getElementById("tambahkan").disabled = true;
+       }else{
+        document.getElementById("tambahkan").disabled = false;
+        
+       }
       });
   </script>
 </body>
