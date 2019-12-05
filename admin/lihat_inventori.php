@@ -108,7 +108,7 @@ if ( !isset($_SESSION['username']) ){
               <div class="card">
                 <div class="card-header card-header-primary">
                   <h4 class="card-title ">Data Inventori</h4>
-                  <p class="card-category"> Data Invrntori yang tersedia</p>
+                  <p class="card-category"> Data Inventori yang tersedia</p>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">

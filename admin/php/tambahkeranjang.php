@@ -6,7 +6,8 @@ if ( isset($_POST['tambahkan']) ){
 	$db = mysql_select_db("database");
 
 	$id_barang = $_POST['id_barang'];
-
+	$jumlah = $_POST['jumlah'];
+	$stok = $_POST['stok'];
 	// Lihat jumlah_tersedia dahulu
 	$res = mysql_query("SELECT stok FROM inventori WHERE id_barang='$id_barang'");
 	while($row = mysql_fetch_assoc($res)){
@@ -14,7 +15,7 @@ if ( isset($_POST['tambahkan']) ){
 	}
 
 	// Cek apakah sudah kosong
-	if ($stok == 0) {
+	if ($stok <= 0) {
 
 		// Jika sudah kosong
 		echo "<script>alert('Stok = 0');</script>";
@@ -23,7 +24,7 @@ if ( isset($_POST['tambahkan']) ){
 	}else{
 
 		// Lanjutkan update
-		$res = mysql_query("UPDATE inventori SET stok=$stok-1 WHERE id_barang='$id_barang'");
+		$res = mysql_query("UPDATE inventori SET stok=$stok-$jumlah WHERE id_barang='$id_barang'");
 
 		if ($res) {
 			$id_transaksi = $_POST['id_transaksi'];

@@ -81,7 +81,7 @@ if ( !isset($_SESSION['username']) ){
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#">SIRINA - SISTEM INFORMASI RAWAT INAP</a>
+            <a class="navbar-brand" href="#">SISTEM INFORMASI INVENTORI</a>
           </div>
           <div class="collapse navbar-collapse justify-content-end">         
             <div class="input-group no-border"></div>
@@ -177,7 +177,18 @@ mysql_close();
             <input class="btn btn-danger" type="reset" data-dismiss="modal" value="Batal">
            
           </div>
+        
+               
+                  
+              <br>
+                 <div class="card-header card-header-danger">
+                  <h4 class="card-title" >Keranjang Belanja</h4>
+                 <p class="card-category"> Data Belanja yg dipilih</p>
+                </div>
+               <br>
+      
         </form>
+      
             <div class="panel-body">
                             <table class="table table-hover table-striped">
                                 <thead>
@@ -222,6 +233,7 @@ mysql_close();
 ?>
                                 </tbody>
                             </table>
+                            <input class="btn btn-success" type="submit" id="bayar" name="bayar" value="Bayar">
                         </div>
           
 
@@ -296,11 +308,13 @@ mysql_close();
         });
       });
 
+
       $("#id_barang").change(function(){
       var harga = $(this).find(":selected").data("harga")
       $("#harga").val(harga)
       })
     });
+
 
 
       $("#jubel").on("keyup",function() {
