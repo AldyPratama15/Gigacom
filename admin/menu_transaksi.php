@@ -194,7 +194,7 @@ mysql_close();
                <br>
       
         </form>
-      
+      <form method="POST" action="php/tambahpembayaran.php">
             <div class="panel-body">
                             <table class="table table-hover table-striped">
                                 <thead>
@@ -204,7 +204,7 @@ mysql_close();
                           <th>Jumlah Beli</th>
                           <th>Total Harga</th>
                           <th>Tanggal Beli</th>
-                          <th>Penanggung Jawab</th>
+                          <th><center>Penanggung Jawab</center></th>
                           <th>Aksi</th>
 
                                     </tr>
@@ -222,11 +222,11 @@ while ( $row = mysql_fetch_assoc($res) ){
 ?>
                                     <tr>
                                         <td><?php echo $row['nama_barang'];?></td>
-                                        <td><?php echo number_format($row['harga']);?></td>
-                                        <td><?php echo number_format($row['jumlah']);?></td>
-                                        <td><?php echo number_format($row['total']);?></td>
-                                        <td><?php echo $row['tanggal'];?></td>
-                                        <td><?php echo $row['nama'];?></td>
+                                        <td><center><?php echo number_format($row['harga']);?></center></td>
+                                        <td><center><?php echo number_format($row['jumlah']);?></center></td>
+                                        <td><center><?php echo number_format($row['total']);?></center></td>
+                                        <td><center><?php echo $row['tanggal'];?></center></td>
+                                        <td><center><?php echo $row['nama'];?></center></td>
                 <td><a href="php/hapus_tmp.php?id_transaksi=<?php echo $row['id_transaksi'];?>" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
                                         </tr>
 <?php
@@ -259,7 +259,7 @@ mysql_close();
             </div>
                             <input class="btn btn-success" type="submit" id="bayar" name="bayar" value="Bayar">
                         </div>
-          
+          </form>
 
                   </div>
                 </div>
@@ -357,11 +357,7 @@ function sum() {
          document.getElementById('kembalian').value = result;
       }
 }
-  // $("#pembayaran").on("keyup",function() {
-  //   var pembayaran = $("#pembayaran").val();
-  //   var total_belanja = $("#total_belanja").val();
-  //   $("#kembalian").val(pembayaran - total_belanja);
-  // });
+
    
 
       $("#jubel").on("keyup",function() {
