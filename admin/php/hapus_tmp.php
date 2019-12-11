@@ -1,7 +1,7 @@
 <?php
 include "koneksi.php";
-$id_transaksi = $_GET['id_transaksi'];
-$sql = "DELETE FROM transaksi_tmp WHERE id_transaksi='$id_transaksi'";
+$id_tmp = $_GET['id_tmp'];
+$sql = "DELETE FROM transaksi_tmp WHERE id_tmp='$id_tmp'";
 $res = mysql_query($sql);
 
 if ($res){

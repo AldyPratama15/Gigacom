@@ -113,9 +113,23 @@ if ( !isset($_SESSION['username']) ){
                 <div class="card-body" id="transaksi">
                  
                  <form method="POST" action="php/tambahkeranjang.php">
-         
           <div class="modal-body">
+
+  <input class="form-control" type="hidden" name="id_tmp">
           
+          <label>Id Transaksi</label>
+          <?php
+          include "php/koneksi.php";
+          $query = "SELECT max(id_transaksi) as maxIdtr FROM transaksi";
+          $hasil = mysql_query($query);
+          $data = mysql_fetch_array($hasil);
+          $id_transaksi = $data['maxIdtr'];
+          $noUrut = (int) substr($id_transaksi, 3, 3);
+          $noUrut++;
+          $char = "BRG";
+          $id_transaksi = $char. sprintf("%03s", $noUrut);
+          ?> 
+          <input class="form-control" type="text" name="id_transaksi" value="<?php echo $id_transaksi ?> " id="id_transaksi" readonly>
              <div class="form-group">
               <label>Pilih Barang</label>
               <select class="form-control" name="id_barang" id="id_barang"  >
@@ -155,16 +169,16 @@ if ( !isset($_SESSION['username']) ){
               <label>Jumlah Beli</label>
               <input class="form-control" type="number" id="jubel" name="jumlah" required>
             </div>
-           
+           <!-- 
             <div class="form-group">
               <label>Total Harga</label><br>
               <input class="form-control" type="number" id="total" name="total" readonly>
             </div>
-            <br>
-              <div class="form-group">
+            <br> -->
+              <!-- <div class="form-group">
               <label>Tanggal Beli</label><br>
               <input class="form-control" type="text" name="tanggal" value="<?php echo date('Y-m-d');?>" readonly>
-            </div><br>
+            </div><br>-->
               <div class="form-group">
               <label>Penanggung Jawab</label><br>
 <?php
@@ -176,7 +190,7 @@ while ( $row = mysql_fetch_assoc($res) ){
 }
 mysql_close();
 ?>
-            </div>
+            </div> 
           </div>
    <div class="modal-footer">
             <input class="btn btn-success" type="submit" name="tambahkan" id="tambahkan" value="Tambah" disabled="disabled">
@@ -194,7 +208,9 @@ mysql_close();
                <br>
       
         </form>
-      <form method="POST" action="php/tambahpembayaran.php">
+      <form method="POST" action="php/tambahTransaksi.php">
+          <input class="form-control" type="text" name="id_transaksi_2" value="<?php echo $id_transaksi ?> " id="id_transaksi" readonly>
+
             <div class="panel-body">
                             <table class="table table-hover table-striped">
                                 <thead>
@@ -202,9 +218,8 @@ mysql_close();
                           <th>Nama Barang</th>
                           <th>Harga Satuan</th>
                           <th>Jumlah Beli</th>
-                          <th>Total Harga</th>
-                          <th>Tanggal Beli</th>
-                          <th><center>Penanggung Jawab</center></th>
+                          <th>Subtotal</th>
+                          <th>Pegawai</th>
                           <th>Aksi</th>
 
                                     </tr>
@@ -213,21 +228,21 @@ mysql_close();
 <?php
 include "php/koneksi.php";
 
-$res = mysql_query("SELECT inventori.nama_barang, transaksi_tmp.harga, transaksi_tmp.jumlah, transaksi_tmp.total, transaksi_tmp.tanggal, pegawai.nama , transaksi_tmp.id_transaksi
+$res = mysql_query("SELECT inventori.nama_barang, inventori.harga, transaksi_tmp.jumlah, transaksi_tmp.id_tmp, transaksi_tmp.subtotal, pegawai.nama
 FROM transaksi_tmp 
 INNER JOIN inventori ON inventori.id_barang = transaksi_tmp.id_barang  
-INNER JOIN pegawai on pegawai.id_pegawai = transaksi_tmp.id_pegawai 
-ORDER BY transaksi_tmp.id_transaksi");
+INNER JOIN pegawai ON pegawai.id_pegawai = transaksi_tmp.id_pegawai  
+ORDER BY transaksi_tmp.id_tmp");
 while ( $row = mysql_fetch_assoc($res) ){
 ?>
                                     <tr>
                                         <td><?php echo $row['nama_barang'];?></td>
-                                        <td><center><?php echo number_format($row['harga']);?></center></td>
-                                        <td><center><?php echo number_format($row['jumlah']);?></center></td>
-                                        <td><center><?php echo number_format($row['total']);?></center></td>
-                                        <td><center><?php echo $row['tanggal'];?></center></td>
-                                        <td><center><?php echo $row['nama'];?></center></td>
-                <td><a href="php/hapus_tmp.php?id_transaksi=<?php echo $row['id_transaksi'];?>" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                                        <td><?php echo number_format($row['harga']);?></td>
+                                        <td><?php echo number_format($row['jumlah']);?></td>
+                                        <td><?php echo number_format($row['subtotal']);?></td>
+                                        <td><?php echo $row['nama'];?></td>
+                                       
+                <td><a href="php/hapus_tmp.php?id_tmp=<?php echo $row['id_tmp'];?>" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
                                         </tr>
 <?php
 }
@@ -238,11 +253,12 @@ mysql_close();
 
 <?php
 include "php/koneksi.php";
-$res = mysql_query("SELECT sum(total) as total_belanja FROM transaksi_tmp ");
+$res = mysql_query("SELECT SUM(subtotal) as total_belanja FROM transaksi_tmp");
 while ( $row = mysql_fetch_assoc($res) ){
 ?>
               <div class="form-group" style="width: 300px;"><br>  
               <label>Total Belanja</label>
+              <!-- <?php $total_belanja = $row['jumlah'] * $row['harga'] ?> -->
               <input class="form-control" type="text" id="total_belanja" name="total_belanja" value="<?php echo $row['total_belanja']?>" onkeyup="sum();" readonly>
             </div><br>
 <?php
@@ -257,7 +273,7 @@ mysql_close();
               <label>Kembalian</label>
               <input class="form-control" type="number" id="kembalian" name="kembalian" readonly>
             </div>
-                            <input class="btn btn-success" type="submit" id="bayar" name="bayar" value="Bayar">
+                            <input class="btn btn-success" type="submit" id="bayar" name="bayar" value="Bayar" >
                         </div>
           </form>
 
@@ -356,7 +372,7 @@ function sum() {
       if (!isNaN(result)) {
          document.getElementById('kembalian').value = result;
       }
-}
+  }
 
    
 
@@ -368,6 +384,7 @@ function sum() {
        if (parseInt(jubel) > parseInt(stok)) {
         alert("Pembelian melebihi stok barang");
         document.getElementById("tambahkan").disabled = true;
+
        }else{
         document.getElementById("tambahkan").disabled = false;
         

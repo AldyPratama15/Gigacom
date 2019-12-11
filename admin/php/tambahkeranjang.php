@@ -27,16 +27,18 @@ if ( isset($_POST['tambahkan']) ){
 		$res = mysql_query("UPDATE inventori SET stok=$stok-$jumlah WHERE id_barang='$id_barang'");
 
 		if ($res) {
-			$id_transaksi = $_POST['id_transaksi'];
-			$id_pegawai = $_POST['id_pegawai'];
+			$id_tmp = $_POST['id_tmp'];
+			// $id_transaksi = $_POST['id_transaksi'];
+			 $id_pegawai = $_POST['id_pegawai'];
 			$id_barang = $_POST['id_barang'];
-			$harga = $_POST['harga'];
+			// $harga = $_POST['harga'];
 			$jumlah = $_POST['jumlah'];
-			$total = $_POST['total'];
-			$tanggal = $_POST['tanggal'];
+			// $total = $_POST['total'];
+			$subtotal = $_POST['jumlah'] * $_POST['harga'];
+			// $tanggal = $_POST['tanggal'];
 
-			$sql = "INSERT INTO transaksi_tmp(id_transaksi, id_pegawai, id_barang, harga, jumlah, total, tanggal)".
-			" VALUES ('$id_transaksi', '$id_pegawai', '$id_barang', '$harga', '$jumlah', '$total', '$tanggal')";
+			$sql = "INSERT INTO transaksi_tmp(id_tmp, id_barang, jumlah, subtotal, id_pegawai)".
+			" VALUES ('$id_tmp', '$id_barang', '$jumlah', '$subtotal', '$id_pegawai')";
 
 			$res = mysql_query($sql, $conn);
 

@@ -45,9 +45,11 @@ if ( isset($_POST['login']) && $_POST['user']!="" && $_POST['pass']!="" ) {
 
 			if($row['jabatan'] == "Owner"){
 				$_SESSION['username'] = $username;
+                $_SESSION['id_pegawai'] = $row['id_pegawai'];
                 header("location:halaman_admin.php");
             }else{
-				$_SESSION['username'] = $username;
+                $_SESSION['username'] = $username;
+                $_SESSION['id_pegawai'] = $row['id_pegawai'];
 				header("location:index.php");
             }
             

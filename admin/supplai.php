@@ -219,7 +219,7 @@ mysql_close();
               echo $res;
               while ( $row = mysql_fetch_assoc($res) ){
               ?>
-                <option value="<?php echo $row['id_barang'];?>"><?php echo $row['id_barang']. " : ". $row['nama_barang'];?></option>
+                <option value="<?php echo $row['id_barang'];?>"><?php echo $row['stok']. " : ". $row['nama_barang'];?></option>
               <?php
               }
               ?>
