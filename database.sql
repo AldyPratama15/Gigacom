@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2019 at 02:04 PM
+-- Generation Time: Dec 14, 2019 at 02:15 PM
 -- Server version: 5.6.21
 -- PHP Version: 5.6.3
 
@@ -23,6 +23,48 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `detail_transaksi`
+--
+
+CREATE TABLE IF NOT EXISTS `detail_transaksi` (
+`id_detail` int(11) NOT NULL,
+  `id_transaksi` varchar(6) NOT NULL,
+  `id_barang` int(11) NOT NULL,
+  `jumlah` int(11) NOT NULL,
+  `subtotal` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`id_detail`, `id_transaksi`, `id_barang`, `jumlah`, `subtotal`) VALUES
+(1, 'TR0001', 10, 2, 1400000),
+(2, 'TR0001', 3, 1, 30000);
+
+--
+-- Triggers `detail_transaksi`
+--
+DELIMITER //
+CREATE TRIGGER `kurang_stok` AFTER INSERT ON `detail_transaksi`
+ FOR EACH ROW BEGIN
+	UPDATE inventori SET stok= stok-NEW.jumlah
+    WHERE id_barang= NEW.id_barang;
+    END
+//
+DELIMITER ;
+DELIMITER //
+CREATE TRIGGER `pengembalian_stok2` BEFORE DELETE ON `detail_transaksi`
+ FOR EACH ROW BEGIN
+	UPDATE inventori SET stok= stok+OLD.jumlah
+    WHERE id_barang= OLD.id_barang;
+    END
+//
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `inventori`
 --
 
@@ -32,16 +74,19 @@ CREATE TABLE IF NOT EXISTS `inventori` (
   `nama` varchar(50) NOT NULL,
   `stok` tinyint(4) NOT NULL,
   `harga` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inventori`
 --
 
 INSERT INTO `inventori` (`id_barang`, `nama_barang`, `nama`, `stok`, `harga`) VALUES
-(3, 'Usb Type C', 'Aksesoris', 0, 30000),
-(6, 'Laptop Asus A442UR', 'Laptop', 25, 700000),
-(7, 'Asus ROG Strix 4779', 'Laptop', 0, 17000000);
+(3, 'Usb Type C', 'Aksesoris', 7, 30000),
+(6, 'Laptop Asus A442UR', 'Laptop', 2, 700000),
+(7, 'Asus ROG Strix 4779', 'Laptop', 1, 17000000),
+(8, 'ADATA RAM 4GB DDR4 ', 'Aksesoris', 8, 500000),
+(9, 'Keyboard Logitech Mechanical RGB Vintage core i7', 'Aksesoris', 127, 1000000),
+(10, 'Hardisk Seagate 1TB USB 3.0', 'Aksesoris', 6, 700000);
 
 -- --------------------------------------------------------
 
@@ -55,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `inventori_masuk` (
   `stok` int(11) NOT NULL,
   `tanggal` date NOT NULL,
   `id_pegawai` tinyint(4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inventori_masuk`
@@ -69,7 +114,13 @@ INSERT INTO `inventori_masuk` (`id`, `id_barang`, `stok`, `tanggal`, `id_pegawai
 (6, 7, 3, '2019-12-02', 1),
 (7, 7, 2, '2019-12-02', 1),
 (8, 7, 1, '2019-12-02', 1),
-(9, 3, 1, '2019-12-05', 1);
+(9, 3, 1, '2019-12-05', 1),
+(10, 3, 3, '2019-12-06', 1),
+(11, 3, 3, '2019-12-11', 1),
+(12, 6, 2, '2019-12-11', 1),
+(13, 7, 1, '2019-12-11', 1),
+(14, 3, 7, '2019-12-13', 1),
+(15, 9, 2147483647, '2019-12-13', 1);
 
 --
 -- Triggers `inventori_masuk`
@@ -121,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `nama`, `alamat`, `telp`, `username`) VALUES
-(1, 'Destino Putra Dewantara', 'Perumahan Mastrip Blok T3, Kec Sumbersari, Kab Jember', '089683184615', 'destino'),
+(1, 'Destino Dewantara Pratama', 'Perumahan Mastrip Blok T3, Kec Sumbersari, Kab Jember', '089683184615', 'destino'),
 (2, 'Aldy Noverianto Pratama', 'Sidoarjo', '0895621117335', 'Aldy Pratama');
 
 -- --------------------------------------------------------
@@ -131,14 +182,20 @@ INSERT INTO `pegawai` (`id_pegawai`, `nama`, `alamat`, `telp`, `username`) VALUE
 --
 
 CREATE TABLE IF NOT EXISTS `transaksi` (
-`id_transaksi` int(11) NOT NULL,
+  `id_transaksi` varchar(6) NOT NULL,
   `id_pegawai` tinyint(4) NOT NULL,
-  `id_barang` int(11) NOT NULL,
-  `harga` int(11) NOT NULL,
-  `jumlah` tinyint(4) NOT NULL,
-  `total` int(11) NOT NULL,
-  `tanggal` date NOT NULL
+  `tanggal` date NOT NULL,
+  `total_belanja` int(11) NOT NULL,
+  `pembayaran` int(11) NOT NULL,
+  `kembalian` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `transaksi`
+--
+
+INSERT INTO `transaksi` (`id_transaksi`, `id_pegawai`, `tanggal`, `total_belanja`, `pembayaran`, `kembalian`) VALUES
+('TR0001', 1, '2019-12-13', 1430000, 1500000, 70000);
 
 -- --------------------------------------------------------
 
@@ -147,14 +204,24 @@ CREATE TABLE IF NOT EXISTS `transaksi` (
 --
 
 CREATE TABLE IF NOT EXISTS `transaksi_tmp` (
-`id_transaksi` int(11) NOT NULL,
-  `id_pegawai` tinyint(4) NOT NULL,
+`id_tmp` int(11) NOT NULL,
   `id_barang` int(11) NOT NULL,
-  `harga` int(11) NOT NULL,
-  `jumlah` tinyint(4) NOT NULL,
-  `total` int(11) NOT NULL,
-  `tanggal` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `jumlah` int(11) NOT NULL,
+  `subtotal` int(11) DEFAULT NULL,
+  `id_pegawai` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Triggers `transaksi_tmp`
+--
+DELIMITER //
+CREATE TRIGGER `pengembalian_stok` BEFORE DELETE ON `transaksi_tmp`
+ FOR EACH ROW BEGIN
+	UPDATE inventori SET stok= stok+OLD.jumlah
+    WHERE id_barang= OLD.id_barang;
+    END
+//
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -203,6 +270,12 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
+-- Indexes for table `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+ ADD PRIMARY KEY (`id_detail`), ADD KEY `id_transaksi` (`id_transaksi`);
+
+--
 -- Indexes for table `inventori`
 --
 ALTER TABLE `inventori`
@@ -236,7 +309,7 @@ ALTER TABLE `transaksi`
 -- Indexes for table `transaksi_tmp`
 --
 ALTER TABLE `transaksi_tmp`
- ADD PRIMARY KEY (`id_transaksi`);
+ ADD PRIMARY KEY (`id_tmp`);
 
 --
 -- Indexes for table `user`
@@ -249,30 +322,40 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+MODIFY `id_detail` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
 -- AUTO_INCREMENT for table `inventori`
 --
 ALTER TABLE `inventori`
-MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `id_barang` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=11;
 --
 -- AUTO_INCREMENT for table `inventori_masuk`
 --
 ALTER TABLE `inventori_masuk`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
 MODIFY `id_pegawai` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `transaksi`
---
-ALTER TABLE `transaksi`
-MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `transaksi_tmp`
 --
 ALTER TABLE `transaksi_tmp`
-MODIFY `id_transaksi` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id_tmp` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+ADD CONSTRAINT `detail_transaksi_ibfk_1` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

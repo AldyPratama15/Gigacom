@@ -126,8 +126,8 @@ if ( !isset($_SESSION['username']) ){
           $id_transaksi = $data['maxIdtr'];
           $noUrut = (int) substr($id_transaksi, 3, 3);
           $noUrut++;
-          $char = "BRG";
-          $id_transaksi = $char. sprintf("%03s", $noUrut);
+          $char = "TR";
+          $id_transaksi = $char. sprintf("%04s", $noUrut);
           ?> 
           <input class="form-control" type="text" name="id_transaksi" value="<?php echo $id_transaksi ?> " id="id_transaksi" readonly>
              <div class="form-group">
@@ -273,7 +273,7 @@ mysql_close();
               <label>Kembalian</label>
               <input class="form-control" type="number" id="kembalian" name="kembalian" readonly>
             </div>
-                            <input class="btn btn-success" type="submit" id="bayar" name="bayar" value="Bayar" >
+                            <input class="btn btn-success" type="submit" id="bayar" name="bayar" value="Bayar" disabled="disabled">
                         </div>
           </form>
 
@@ -370,13 +370,20 @@ function sum() {
       var total_belanja = document.getElementById('total_belanja').value;
       var result = parseInt(pembayaran) - parseInt(total_belanja);
       if (!isNaN(result)) {
-         document.getElementById('kembalian').value = result;
+        document.getElementById('kembalian').value = result;
+        if ($("#kembalian").val() <=0) {
+        document.getElementById("bayar").disabled = true;
+
+        }else{
+        document.getElementById("bayar").disabled = false;
+          
+        }
       }
   }
 
    
 
-      $("#jubel").on("keyup",function() {
+      $("#jubel").on("keyup, change",function() {
        var harga = $("#harga").val();
        var jubel = $("#jubel").val();
        var stok = $("#stok").val();
